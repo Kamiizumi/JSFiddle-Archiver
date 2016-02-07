@@ -1,4 +1,4 @@
-var http = require('http');
+var http = require('https');
 var fs = require('fs');
 var readline = require('readline');
 
@@ -7,10 +7,10 @@ function getVersion(fiddleId, versionNumber){
 
   var requestOptions = {
     host: 'fiddle.jshell.net',
-    port: 80,
+    port: 443,
     path: '/' + fiddleId + '/' + versionNumber + '/show/light/',
     headers: {
-      referer: 'http://fiddle.jshell.net/' + fiddleId + '/' + versionNumber + '/show/light/'
+      referer: 'https://fiddle.jshell.net/' + fiddleId + '/' + versionNumber + '/show/light/'
     }
   };
 
