@@ -16,11 +16,13 @@ function getVersion(fiddleId, versionNumber){
   };
 
   console.log("Starting request");
-  http.request(requestOptions, function(response){
+  http.get(requestOptions, function(response){
     switch(response.statusCode){
       case 200:
         console.log("ok");
-        storeVersion(fiddleId, versionNumber, response);
+        response.on('data', function(chunk){
+          storeVersion(fiddleId, versionNumber, chunk.toString());
+        });
         break;
       case 404:
         console.log("not found");
@@ -34,9 +36,17 @@ function getVersion(fiddleId, versionNumber){
 }
 
 function storeVersion(fiddleId, version, response){
-    var result = fs.createWriteStream(version + ".html");
-    response.pipe(result);
+    var result = fs.writeFileSync(fiddleId + "/index.html", response);
+    exec("git add .", { cwd: fiddleId });
 
+    try {
+      exec("git commit -m \"Version " + version + "\"", { cwd: fiddleId });
+    }
+    catch(err) {
+      console.warn("git commit failed (possibly no changes since last version?)");
+    }
+    
+    fs.unlinkSync(fiddleId + '/index.html');
     getVersion(fiddleId, version += 1);
 }
 
