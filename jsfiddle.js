@@ -56,6 +56,14 @@ function initRepo(fiddleId) {
     }
 
     exec("git init", { cwd: fiddleId });
+    createReadMe(fiddleId);
+}
+
+function createReadMe(fiddleId){
+    var readMeContents = "# Archive of JS Fiddle " + fiddleId + "\r\n\r\nGit repository created from all versions of JS Fiddle [" + fiddleId + "](https://jsfiddle.net/" + fiddleId + ")";
+    fs.writeFileSync(fiddleId + "/README.md", readMeContents);
+    exec("git add .", { cwd: fiddleId });
+    exec("git commit -m \"Repository creation\"", { cwd: fiddleId });
 }
 
 function getFiddleId() {
