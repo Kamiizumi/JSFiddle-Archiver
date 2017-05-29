@@ -8,7 +8,7 @@ JSFiddle Archiver is a Node.JS script that can be used to download the whole ver
 
 - Node.js
 - `git` on $PATH
-- ID of a JSFiddle (This is the section of the URL immediatly after the domain name; the bold part of the following example URL: http://jsfiddle.net/**jUVfS**/30/)
+- ID of a JSFiddle (This is the section of the URL immediatly after the domain name; the bold part of the following example URL: jsfiddle.net / **jUVfS** / 30)
 
 ## Usage
 
