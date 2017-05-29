@@ -40,7 +40,7 @@ function storeVersion(fiddleId, version, response) {
     exec("git add .", { cwd: fiddleId });
 
     try {
-        exec("git commit -m \"Version " + version + "\"", { cwd: fiddleId });
+        exec("git commit -m \"Version " + version + " (https://jsfiddle.net/" + fiddleId + "/" + version + ")\"", { cwd: fiddleId });
     }
     catch (err) {
         console.warn("git commit failed (possibly no changes since last version?)");
