@@ -1,6 +1,7 @@
 var http = require('https');
 var fs = require('fs');
 var readline = require('readline');
+var exec = require('child_process').execSync;
 
 function getVersion(fiddleId, versionNumber){
   console.log("Getting version " + versionNumber);
@@ -39,6 +40,14 @@ function storeVersion(fiddleId, version, response){
     getVersion(fiddleId, version += 1);
 }
 
+function initRepo(fiddleId){
+    if(fs.existsSync(fiddleId) == false){
+      fs.mkdir(fiddleId);
+    }
+
+    exec("git init", { cwd: fiddleId });
+}
+
 function getFiddleId(){
   var readLineInterface = readline.createInterface({
     input: process.stdin,
@@ -46,6 +55,7 @@ function getFiddleId(){
   });
 
   readLineInterface.question('fiddle id: ', (answer) => {
+    initRepo(answer);
     getVersion(answer, 0);
   });
 }
